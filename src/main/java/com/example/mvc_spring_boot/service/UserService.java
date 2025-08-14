@@ -20,4 +20,17 @@ public class UserService {
     public List<User> findAll(){
         return userRepository.findAll();
     }
+    
+    public List<User> search(String name){
+        return userRepository.findByNomeLike(name);
+    }
+    
+    public boolean add(User user){
+        if(user.getNome() == "" || user.getEmail() == ""){
+            return false;
+        }
+        
+        userRepository.save(user);
+        return true;
+    }
 }
