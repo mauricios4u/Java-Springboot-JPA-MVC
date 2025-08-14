@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
     /* Com spring.data.jpa, ao chamar método 'findBy' + nome da coluna no banco (atributo da entidade), ele faz a query olhando para coluna respectiva */
     User findByNome(String name);
     
+    List<User> findByNomeLike(String name);
     /* Métodos mágicos, customizando as queries (JPQL) */
     // @Query("select * from users where nome like %?1%")
     // List<User> findByNomeLike(String name);
