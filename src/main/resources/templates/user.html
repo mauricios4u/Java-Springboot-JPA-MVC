@@ -1,31 +1,56 @@
-<html>
-    <head>
-        <title>Novo usuário</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>
-            
-            <a href="/users">Voltar</a>
-            
-            <h2>Novo usuário</h2>
-            <form action="#" th:action="@{user}" th:object="${user}" method="post">
-                <label>Nome</label>
-                <input type="text" name="name" id="name" th:field="*{nome}" />
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-                <br/>
-                <label>E-mail</label>
-                <input type="text" name="email" id="email" th:field="*{email}" />
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-                <button type="submit">Salvar</button>
-            </form>
-            
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0" th:text="${user.id != null} ? 'Editar Usuário' : 'Novo Usuário'"></h5>
+                </div>
+                <div class="card-body">
+
+                    <!-- Formulário -->
+                    <form th:action="@{/user/save}" th:object="${user}" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" th:field="*{id}" />
                         
-            
-            
+                        <!-- Nome -->
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" id="nome" th:field="*{nome}" class="form-control" 
+                                   placeholder="Digite o nome">
+                            <div class="text-danger small" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control"
+                                   placeholder="Digite o e-mail">
+                            <div class="text-danger small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-between">
+                            <a href="/user/list" class="btn btn-secondary">Voltar</a>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
         </div>
-        
-        
-    </body>
+    </div>
+</div>
+
+</body>
 </html>

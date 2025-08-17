@@ -1,5 +1,6 @@
 package com.example.mvc_spring_boot.entity;
 
+import com.example.mvc_spring_boot.StatusRole;
 import jakarta.persistence.*;
 
 
@@ -8,12 +9,24 @@ import jakarta.persistence.*;
  * @author Mauricio
  */
 @Entity
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long name;
+    
+    private String name;
 
+    @Enumerated(EnumType.STRING)
+    private StatusRole status;
+    
+    public Role() {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -22,12 +35,20 @@ public class Role {
         this.id = id;
     }
 
-    public Long getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Long name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public StatusRole getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusRole status) {
+        this.status = status;
     }
     
     

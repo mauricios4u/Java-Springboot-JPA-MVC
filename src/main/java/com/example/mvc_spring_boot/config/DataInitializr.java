@@ -1,6 +1,9 @@
 package com.example.mvc_spring_boot.config;
 
+import com.example.mvc_spring_boot.StatusRole;
+import com.example.mvc_spring_boot.entity.Role;
 import com.example.mvc_spring_boot.entity.User;
+import com.example.mvc_spring_boot.repository.RoleRepository;
 import com.example.mvc_spring_boot.repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,19 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     UserRepository userRepository;
     
+    @Autowired
+    RoleRepository roleRepository;
+    
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         //throw new UnsupportedOperationException("Not supported yet."); 
+        List<Role> roles = roleRepository.findAll();
+        if(roles.isEmpty()){
+            createRole("Admin");
+            createRole("Professor");
+            createRole("Aluno");
+        }
+        
         List<User> usuarios = userRepository.findAll();
         if(usuarios.isEmpty()){
             createUser("Maurício", "mauricio.quednau@gmail.com");
@@ -38,5 +51,13 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         User u = new User(name, email);
         userRepository.save(u);
     }
+    
+    public void createRole(String name){
+        Role r = new Role(name);
+        r.setStatus(StatusRole.ATIVO);
+        roleRepository.save(r);
+    }
+    
+    
     
 }
